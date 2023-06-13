@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/logotipoMarcadin"
+            android:layout_width="match_parent"
+            android:layout_height="267dp"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:rotationX="-8"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/logomarca_mercadin" />
+
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="E-mail"
+            android:textColor="@color/grey"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/editTextTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/light_pink"
+            android:ems="10"
+            android:hint="meuemail@email.com"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/textViewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Senha"
+            android:textColor="@color/grey"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/light_pink"
+            android:ems="10"
+            android:hint="***"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:textSize="17dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginBtn"
+            style="@android:style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/deep_pink"
+            android:text="LogIn"
+            android:textAllCaps="true"
+            android:textColor="@color/light_grey"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewForgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Esqueci Minha Senha"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textColor="#6A6868"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textViewRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Quero me Cadastrar!"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textColor="#FF2E2D2D"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/google" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
