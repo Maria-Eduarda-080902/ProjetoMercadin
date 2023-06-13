@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/successAlertConstraintLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alertDialog"
+        android:background="@drawable/alert_bkg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/successTitle"-->
+<!--            android:text="Sucess!"-->
+<!--            android:textAllCaps="true"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textCursorDrawable="20sp"-->
+<!--            android:paddingTop="28dp"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/alertDialog"/>-->
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

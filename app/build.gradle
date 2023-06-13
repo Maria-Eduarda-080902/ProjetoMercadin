@@ -55,4 +55,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.github.santalu:maskara:1.0.0'
 }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projetomercadinho.dao.UsersDao;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -37,29 +38,37 @@ public class LoginActivity extends AppCompatActivity {
         logIn();
     }
 
+    private void initView(){
+        userEdt = findViewById(R.id.editTextTextEmail);
+        passEdt = findViewById(R.id.editTextTextPassword);
+        loginBtn = findViewById(R.id.loginBtn);
+        notRegistered = findViewById(R.id.textViewRegister);
+        auth = FirebaseAuth.getInstance();
+    }
+
     private void logIn(){
         loginBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                if(userEdt.getText().toString().isEmpty() || passEdt.getText().toString().isEmpty()){
-                    Toast.makeText(LoginActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
-                }else {
-                    String email = userEdt.getText().toString();
-                    String pass = passEdt.getText().toString();
+                String email = userEdt.getText().toString();
+                String pass = passEdt.getText().toString();
+                String message = checkLoginInformation(email, pass);
+                if(message.equals("ok")){
                     auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }else{
-                                Log.w(TAG, "loginUserWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Falha ao realizar login",
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Login ou senha incorretos", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
+               else{
+                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -73,12 +82,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initView(){
-        userEdt = findViewById(R.id.editTextTextEmail);
-        passEdt = findViewById(R.id.editTextTextPassword);
-        loginBtn = findViewById(R.id.loginBtn);
-        notRegistered = findViewById(R.id.textViewRegister);
-        auth = FirebaseAuth.getInstance();
+    
+    private String checkLoginInformation(String email, String pass){
+        if(email.isEmpty() || pass.isEmpty()){
+            return "Por favor, preencha todos os campos";
+        } else if (!email.contains("@")) {
+            return "Por favor, insira um email válido";
+        }
+        return "ok";
     }
 }

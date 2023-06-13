@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null){
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
+        } else{
+            Toast.makeText(MainActivity.this, "Bem-vindo!", Toast.LENGTH_SHORT).show();
         }
     }
 
