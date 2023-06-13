@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
         nameField = findViewById(R.id.editTextTextName);
         emailField = findViewById(R.id.editTextTextEmailRegister);
         cpfField = findViewById(R.id.editTextTextCPF);
-        String mask = new
         passField = findViewById(R.id.editTextTextPasswordRegister);
         birthField = findViewById(R.id.editTextTextBirthdate);
         cepField = findViewById(R.id.editTextTextCEP);
