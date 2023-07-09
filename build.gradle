@@ -9,7 +9,10 @@ buildscript {
         jcenter()
         google() // add this
         mavenCentral()  // Maven Central repository
-        maven { url 'https://jitpack.io' }
+        maven {
+            name 'glide-snapshot'
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 
 

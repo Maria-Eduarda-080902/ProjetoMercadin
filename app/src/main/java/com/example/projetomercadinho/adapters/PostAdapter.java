@@ -2,8 +2,10 @@ package com.example.projetomercadinho.adapters;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +20,8 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.projetomercadinho.PropostaFormActivity;
 import com.example.projetomercadinho.R;
 import com.example.projetomercadinho.models.PostItem;
 import com.example.projetomercadinho.fragments.HomeFragment;
@@ -39,6 +43,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     StorageReference storage;
     FirebaseAuth auth;
 
+    private Dialog dialog;
+
     public PostAdapter(Context context, List<PostItem> postLists) {
         this.context = context;
         this.postLists = postLists;
@@ -56,9 +62,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PostItem post = postLists.get(position);
-        holder.pictureSpace.setImageURI(Uri.parse(post.getPostPicture()));
+        Glide.with(holder.postView.getContext()).load(post.getPostPicture()).into(holder.pictureSpace);
         holder.oferto.setText(post.getOferta());
         holder.procuro.setText(post.getProcura());
         holder.menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -82,6 +88,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
+        holder.proposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPropostaForm(postLists.get(position));
+            }
+        });
+
+    }
+
+    private void showPropostaForm(PostItem post){
+        Intent intent = new Intent(context, PropostaFormActivity.class);
+        intent.putExtra("key", post.getKey());
+        context.startActivity(intent);
     }
 
     @Override
@@ -129,6 +148,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             oferto = itemView.findViewById(R.id.textViewOferto);
             procuro = itemView.findViewById(R.id.textViewProcuro);
             like = itemView.findViewById(R.id.likeBtn);
+            proposta = itemView.findViewById(R.id.proposta);
 
         }
 

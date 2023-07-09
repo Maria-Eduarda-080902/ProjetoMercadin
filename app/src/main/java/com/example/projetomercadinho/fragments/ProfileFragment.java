@@ -1,5 +1,6 @@
 package com.example.projetomercadinho.fragments;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetomercadinho.R;
+import com.example.projetomercadinho.adapters.PostAdapter;
+import com.example.projetomercadinho.dao.PostsDao;
+import com.example.projetomercadinho.models.PostItem;
 import com.example.projetomercadinho.models.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,12 +33,19 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     private TextView profileName, profileBio;
     private CircleImageView profilePicture;
+    private List<PostItem> postList;
+    private static Activity activity;
+    private static PostAdapter postAdapter;
+    private RecyclerView userPosts;
     private Toolbar toolbar;
     private String uid;
     private FirebaseAuth auth;
@@ -44,7 +57,18 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        activity = getActivity();
+
+
+        userPosts = rootView.findViewById(R.id.profileRecyclerView);
+        userPosts.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
+        postList = generatePostItems();
+        postAdapter = new PostAdapter(getActivity(), postList);
+        userPosts.setAdapter(postAdapter);
+
+        return rootView;
 
     }
 
@@ -116,6 +140,31 @@ public class ProfileFragment extends Fragment {
         return user;
     }
 
+    private List<PostItem> generatePostItems(){
+        List<PostItem> postItems = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference("PostsData").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    postList.clear();
+                    postItems.addAll((Collection<? extends PostItem>) PostsDao.updateList(snapshot, postAdapter));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
+
+        return postItems;
+
+    }
 
 
 }

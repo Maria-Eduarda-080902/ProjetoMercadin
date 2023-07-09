@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +34,7 @@ import com.example.projetomercadinho.R;
 import com.example.projetomercadinho.adapters.PostAdapter;
 import com.example.projetomercadinho.dao.PostsDao;
 import com.example.projetomercadinho.models.PostItem;
+import com.example.projetomercadinho.models.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,12 +52,13 @@ import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private List<PostItem> postList;
     private RecyclerView homeFeed;
@@ -86,14 +90,18 @@ public class HomeFragment extends Fragment {
         search = rootView.findViewById(R.id.search);
         search.clearFocus();
 
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         postList = generatePostItems();
         postAdapter = new PostAdapter(getActivity(), postList);
         homeFeed.setAdapter(postAdapter);
 
         prepareSearch();
-
-
-        return rootView;
     }
 
     private List<PostItem> generatePostItems(){

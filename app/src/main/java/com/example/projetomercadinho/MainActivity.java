@@ -36,6 +36,7 @@ import com.example.projetomercadinho.fragments.CombinadosFragment;
 import com.example.projetomercadinho.fragments.HomeFragment;
 import com.example.projetomercadinho.fragments.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -222,10 +223,14 @@ public class MainActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                                                     if(task.isSuccessful()){
-                                                        String downloadUri = postPicture.getTag().toString();
-                                                        FirebaseDatabase.getInstance().getReference("PostsData")
-                                                                .child(snapshot.getKey()).child("postPicture").setValue(downloadUri);
-                                                        Toast.makeText(mainActivity, "Post disponível no seu feed!", Toast.LENGTH_SHORT).show();
+                                                        storage.child(snapshot.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                            @Override
+                                                            public void onSuccess(Uri uri) {
+                                                                FirebaseDatabase.getInstance().getReference("PostsData")
+                                                                        .child(snapshot.getKey()).child("postPicture").setValue(uri.toString());
+                                                                Toast.makeText(mainActivity, "Post disponível no seu feed!", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             });

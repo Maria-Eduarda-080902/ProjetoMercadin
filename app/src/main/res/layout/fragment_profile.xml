@@ -6,10 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profileRecyclerView"
+        android:layout_width="394dp"
+        android:layout_height="434dp"
+        android:layout_marginTop="280dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frame_layout"/>
+        android:layout_height="150dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textViewProfileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:text="LOREM IPSUM"
+                    android:textColor="@color/grey"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewProfileBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="LOREM IPSUM"
+                    android:textColor="@color/grey"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.394" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/data_mock" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/superiorProfileToolbar"
@@ -21,127 +99,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilePic"
-        android:layout_width="115dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/data_mock"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/grey"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.328" />
-
-    <TextView
-        android:id="@+id/textViewProfileBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/grey"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.394" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/highlited_display"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textPostsNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="30dp"
-                android:textColor="@color/deep_pink"
-                android:textStyle="bold"
-                android:text="23" />
-            <TextView
-                android:id="@+id/textPosts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textAlignment="center"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:text="Posts" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="12dp"
-
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/textCombinadosNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="23"
-                android:textAlignment="center"
-                android:textColor="@color/deep_pink"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textCombinados"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="combinados"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="@color/grey"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/profileRecyclerView"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="60dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
