@@ -2,11 +2,13 @@ package com.example.projetomercadinho;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,13 +66,21 @@ public class RegisterActivity extends AppCompatActivity {
         emailField = findViewById(R.id.editTextTextEmailRegister);
         cpfField = findViewById(R.id.editTextTextCPF);
         passField = findViewById(R.id.editTextTextPasswordRegister);
-        birthField = findViewById(R.id.editTextTextBirthdate);
+        birthField = findViewById(R.id.editTextBirthdate);
         cepField = findViewById(R.id.editTextTextCEP);
         registerBtn = findViewById(R.id.registerBtn);
         loginTxt = findViewById(R.id.textViewSignIn);
     }
 
     private void signUp(){
+
+        birthField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog();
+            }
+        });
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,5 +159,15 @@ public class RegisterActivity extends AppCompatActivity {
     public static boolean validateDate(String dateStr) {
         Matcher matcher = VALID_BRAZILIAN_DATE_REGEX.matcher(dateStr);
         return matcher.matches();
+    }
+
+    public void showDateDialog(){
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                birthField.setText(dayOfMonth+"/"+String.format("%02d", month+1)+"/"+year);
+            }
+        }, 2023, 0, 1);
+        dialog.show();
     }
 }

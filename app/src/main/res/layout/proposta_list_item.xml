@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/listImage"
+            android:src="@drawable/square_icon"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageView"/>
+        
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/nomeOferta"
+            android:text="Nome do Produto"
+            android:textColor="@color/grey"
+            android:layout_toEndOf="@id/listImage"
+            android:textSize="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="15dp"/>
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="15dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="75dp"
+            android:layout_toEndOf="@+id/listImage"
+            android:background="@drawable/status_tag"
+            android:id="@+id/statusTag"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pendente"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/grey"
+                android:textSize="7dp"
+                android:id="@+id/statusTagText"
+                />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/verProposta"
+            android:src="@drawable/baseline_more_vert_24"
+            android:textColor="@color/grey"
+            android:layout_toEndOf="@id/nomeOferta"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

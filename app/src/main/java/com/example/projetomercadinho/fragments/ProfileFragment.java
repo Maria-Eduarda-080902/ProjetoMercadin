@@ -108,7 +108,6 @@ public class ProfileFragment extends Fragment {
                 profileBio.setText(dataSnapshot.child("bio").getValue().toString());
 
                 StorageReference profilePicRef = storage.child("Profile_pics").child(uid + ".jpg");
-
                 File localFile = null;
                 try {
                     localFile = File.createTempFile("images", "jpg");
@@ -146,12 +145,28 @@ public class ProfileFragment extends Fragment {
         FirebaseDatabase.getInstance().getReference("PostsData").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    postList.clear();
-                    postItems.addAll((Collection<? extends PostItem>) PostsDao.updateList(snapshot, postAdapter));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                postList.clear();
+                for(DataSnapshot snapshotItem : snapshot.getChildren()){
+                    String userKey = snapshotItem.child("userId").getValue().toString();
+                    if(userKey.equals(auth.getUid())){
+                        PostItem post = snapshotItem.getValue(PostItem.class);
+                        post.setKey(snapshotItem.getKey());
+                        FirebaseDatabase.getInstance().getReference("UserData/"+userKey).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                post.setUserName(snapshot.child("name").getValue().toString());
+                                post.setUserPic(snapshot.child("profile_pic").getValue().toString());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        addPost(post);
+                    }
                 }
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -164,6 +179,10 @@ public class ProfileFragment extends Fragment {
 
         return postItems;
 
+    }
+
+    private void addPost(PostItem post){
+        postList.add(0, post);
     }
 
 

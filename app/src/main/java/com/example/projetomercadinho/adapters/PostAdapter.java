@@ -21,7 +21,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.projetomercadinho.MainActivity;
 import com.example.projetomercadinho.PropostaFormActivity;
+import com.example.projetomercadinho.PropostasListActivity;
 import com.example.projetomercadinho.R;
 import com.example.projetomercadinho.models.PostItem;
 import com.example.projetomercadinho.fragments.HomeFragment;
@@ -64,6 +66,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PostItem post = postLists.get(position);
+        Glide.with(holder.postView.getContext()).load(post.getUserPic()).into(holder.postProfilePic);
+        holder.username.setText(post.getUserName());
         Glide.with(holder.postView.getContext()).load(post.getPostPicture()).into(holder.pictureSpace);
         holder.oferto.setText(post.getOferta());
         holder.procuro.setText(post.getProcura());
@@ -72,8 +76,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.deletarPostItem){
                     deletePost(position);
+                    return true;
                 } else if (item.getItemId() == R.id.editarPostItem) {
                     HomeFragment.showBottomDialog(postLists.get(position).getKey());
+                    return true;
+                } else if (item.getItemId() == R.id.verPropostas) {
+                    Intent intent = new Intent(context, PropostasListActivity.class);
+                    intent.putExtra("keyPost", post.getKey());
+                    context.startActivity(intent);
+                    return true;
                 }
                 return true;
             }
@@ -158,7 +169,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
         private void showPopUpMenu(View view){
-            menu.inflate(R.menu.post_options_menu);
+            menu.inflate(R.menu.user_post_options_menu);
             menu.show();
         }
     }

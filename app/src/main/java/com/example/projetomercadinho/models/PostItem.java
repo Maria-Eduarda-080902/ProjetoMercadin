@@ -5,6 +5,8 @@ import java.util.Date;
 public class PostItem {
 
     private String userId;
+    private String userName;
+    private String userPic;
     private Date postCreation;
     private String  postPicture;
     private String oferta;
@@ -55,5 +57,21 @@ public class PostItem {
 
     public void setKey(String key){
         this.key = key;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPic() {
+        return userPic;
+    }
+
+    public void setUserPic(String userPic) {
+        this.userPic = userPic;
     }
 }

@@ -4,12 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PropostaFormActivity">
+    tools:context=".PropostaDetailActivity"
+    android:scrollbars="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frame_layout"/>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/superiorToolbar"
@@ -40,10 +37,72 @@
         android:layout_marginLeft="30dp"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Produto Ofertado"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/produtoOfertado"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/square_icon"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="12dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewProduto"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/grey" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/light_grey"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Produto Ofertado"
+                android:layout_marginTop="15dp"
+                android:id="@+id/userText"
+                android:text="Proposta feita por "
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:textColor="@color/grey" />
@@ -58,10 +117,10 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <ImageView
-                        android:id="@+id/produtoOfertado"
+                        android:id="@+id/imageProposta"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
-                        android:src="@drawable/square_icon"
+                        android:src="@drawable/baseline_add_to_photos_24"
                         android:scaleType="centerCrop"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
@@ -75,179 +134,114 @@
                     android:layout_margin="20dp">
 
                     <TextView
+                        android:id="@+id/textOferta"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/textViewProduto"
-                        android:text=""
+                        android:layout_height="wrap_content"
+                        android:text="Descrição"
+                        android:textColor="@color/grey"
                         android:textStyle="bold"
-                        android:textSize="12dp"
-                        android:textColor="@color/grey" />
-
-                </LinearLayout>
-
-
-
-        </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/light_grey"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Proposta"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:textColor="@color/grey" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:id="@+id/imageProposta"
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
-                            android:src="@drawable/baseline_add_to_photos_24"
-                            android:scaleType="centerCrop"
-                            android:layout_marginTop="12dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginLeft="12dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/textProposta"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_margin="20dp">
-
-                        <TextView
-                            android:id="@+id/textOferta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="O que tem para ofertar?"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold"
-                            android:textSize="15dp" />
-                        <EditText
-                            android:id="@+id/editTextTextOferta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/light_pink"
-                            android:ems="10"
-                            android:hint="descrição da oferta"
-                            android:inputType="text"
-                            android:padding="16dp"
-                            android:textSize="12dp" />
-
-                    </LinearLayout>
-
-
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/light_pink"
+                        android:ems="10"
+                        android:hint="descrição da oferta"
+                        android:padding="16dp"
+                        android:textSize="12dp" />
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
+        </LinearLayout>
 
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textLocal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="Local da Troca"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/editTextLocalTroca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/light_pink"
+                android:ems="10"
+                android:hint="Endereço da troca"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
                 <TextView
-                    android:id="@+id/textLocal"
+                    android:id="@+id/textDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Local da Troca"
+                    android:text="Data da Troca"
                     android:textColor="@color/grey"
                     android:textStyle="bold"
                     android:textSize="15dp" />
-                <EditText
-                    android:id="@+id/editTextLocalTroca"
+                <TextView
+                    android:id="@+id/editDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light_pink"
                     android:ems="10"
-                    android:hint="Endereço da troca"
-                    android:inputType="text"
-                    android:textSize="12dp" />
+                    android:hint="dd/mm/aaaa"
+                    android:drawableRight="@drawable/baseline_calendar_month_24"
+                    android:focusable="false"
+                    android:textSize="12dp"/>
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:id="@+id/datePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp">
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
-                    <TextView
-                        android:id="@+id/textDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Data da Troca"
-                        android:textColor="@color/grey"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
-                    <EditText
-                        android:id="@+id/editDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/light_pink"
-                        android:ems="10"
-                        android:hint="dd/mm/aaaa"
-                        android:inputType="date"
-                        android:drawableRight="@drawable/baseline_calendar_month_24"
-                        android:focusable="false"
-                        android:textSize="12dp"/>
-
-                </LinearLayout>
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp">
+                    android:text="Hora da Troca"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/editTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_pink"
+                    android:ems="10"
+                    android:hint="00:00"
+                    android:focusable="false"
+                    android:drawableRight="@drawable/baseline_access_time_24"
+                    android:textSize="12dp" />
 
-                    <TextView
-                        android:id="@+id/textTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Hora da Troca"
-                        android:textColor="@color/grey"
-                        android:textStyle="bold"
-                        android:textSize="15dp" />
-                    <EditText
-                        android:id="@+id/editTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/light_pink"
-                        android:ems="10"
-                        android:hint="00:00"
-                        android:inputType="time"
-                        android:focusable="false"
-                        android:drawableRight="@drawable/baseline_access_time_24"
-                        android:textSize="12dp" />
-
-                </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -262,14 +256,13 @@
                 android:textColor="@color/grey"
                 android:textStyle="bold"
                 android:textSize="15dp" />
-            <EditText
+            <TextView
                 android:id="@+id/editTextInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/light_pink"
                 android:ems="10"
                 android:hint="Info de contato, negocições, etc..."
-                android:inputType="text"
                 android:textSize="12dp" />
 
         </LinearLayout>
@@ -316,6 +309,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 

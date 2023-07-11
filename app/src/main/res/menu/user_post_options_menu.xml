@@ -8,4 +8,6 @@
     <item android:title="Deletar"
         android:id="@+id/deletarPostItem"
         android:icon="@drawable/baseline_delete_outline_24"/>
+    <item android:title="Propostas"
+        android:id="@+id/verPropostas"/>
 </menu>

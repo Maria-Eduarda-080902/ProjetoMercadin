@@ -110,12 +110,29 @@ public class HomeFragment extends Fragment{
         FirebaseDatabase.getInstance().getReference("PostsData").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
                     postList.clear();
-                    postItems.addAll((Collection<? extends PostItem>) PostsDao.updateList(snapshot, postAdapter));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                    for(DataSnapshot snapshotItem : snapshot.getChildren()){
+                        String userKey = snapshotItem.child("userId").getValue().toString();
+
+                        if(!userKey.equals(auth.getUid())){
+                            PostItem post = snapshotItem.getValue(PostItem.class);
+                            post.setKey(snapshotItem.getKey());
+                            FirebaseDatabase.getInstance().getReference("UserData/"+userKey).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    post.setUserName(snapshot.child("name").getValue().toString());
+                                    post.setUserPic(snapshot.child("profile_pic").getValue().toString());
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            addPost(post);
+                        }
+                    }
+                    postAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -314,6 +331,10 @@ public class HomeFragment extends Fragment{
         return likes;
     }
 
+    public void addPost(PostItem post){
+        postList.add(0, post);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent result) {
@@ -339,9 +360,6 @@ public class HomeFragment extends Fragment{
             Toast.makeText(activity, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 
 
 }

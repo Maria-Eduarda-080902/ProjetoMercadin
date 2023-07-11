@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoMercadinho"
         tools:targetApi="31">
+        <activity
+            android:name=".PropostasListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PropostaDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".PropostaFormActivity"
             android:exported="false" />
@@ -45,6 +53,10 @@
             android:name=".LoginActivity"
             android:exported="true" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBfgU5u29U8DdGoUq71Q7OPvIycxzkbrsc" />
     </application>
 
 </manifest>
