@@ -6,12 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,9 +30,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.Manifest;
 
 import com.bumptech.glide.Glide;
 import com.example.projetomercadinho.models.PropostaData;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,15 +46,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class PropostaFormActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 100;
     private FirebaseAuth auth;
     private DatabaseReference reference;
     private StorageReference storage;
@@ -81,7 +97,6 @@ public class PropostaFormActivity extends AppCompatActivity {
         descricao = findViewById(R.id.textViewProduto);
         propostaPic = findViewById(R.id.imageProposta);
         propostaDesc = findViewById(R.id.editTextTextOferta);
-        local = findViewById(R.id.editTextLocalTroca);
         info = findViewById(R.id.editTextInfo);
 
 
@@ -92,6 +107,18 @@ public class PropostaFormActivity extends AppCompatActivity {
 
         cancel = findViewById(R.id.cancel_button);
         save = findViewById(R.id.saveProposta);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PropostaFormActivity.this, PropostasListActivity.class);
+                intent.putExtra("keyPost", keyPost);
+                startActivity(intent);
+            }
+        });
+
+        local = findViewById(R.id.editTextLocalTroca);
+        getLastLocation();
 
         FirebaseDatabase.getInstance().getReference("PostsData").child(keyPost).addValueEventListener(new ValueEventListener() {
             @Override
@@ -235,6 +262,38 @@ public class PropostaFormActivity extends AppCompatActivity {
             Toast.makeText(PropostaFormActivity.this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void getLastLocation(){
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null){
+                        Geocoder geocoder = new Geocoder(PropostaFormActivity.this, Locale.getDefault());
+                        try {
+                            String currentPlace = "";
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            currentPlace = addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality();
+                            local.setText(currentPlace);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+            });
+        } else{
+            askPermission();
+        }
+    }
+    private void askPermission(){
+        ActivityCompat.requestPermissions(PropostaFormActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        getLastLocation();
+    }
+
+
 
 
 

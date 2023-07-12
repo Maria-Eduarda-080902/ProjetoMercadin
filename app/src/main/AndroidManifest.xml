@@ -29,9 +29,6 @@
             android:name=".PropostaFormActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".SetUpProfileActivity"
             android:exported="false" />
         <activity

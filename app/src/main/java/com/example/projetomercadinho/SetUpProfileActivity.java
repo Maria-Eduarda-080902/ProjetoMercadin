@@ -106,9 +106,8 @@ public class SetUpProfileActivity extends AppCompatActivity {
         profilePicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                downloadUri = circleImageView.getTag().toString();
                 FirebaseDatabase.getInstance().getReference("UserData")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_pic").setValue(downloadUri);
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_pic").setValue(uri.toString());
                 FirebaseDatabase.getInstance().getReference("UserData")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("bio").setValue(bioString);
                 Toast.makeText(SetUpProfileActivity.this, "Sucesso!", Toast.LENGTH_SHORT).show();

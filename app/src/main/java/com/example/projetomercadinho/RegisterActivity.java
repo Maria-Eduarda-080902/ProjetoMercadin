@@ -2,8 +2,15 @@ package com.example.projetomercadinho;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +22,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.projetomercadinho.models.UserData;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +47,7 @@ import kotlin.text.Regex;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText nameField, emailField, cpfField, passField, birthField, cepField;
+    private static final int REQUEST_CODE = 100;
     private Button registerBtn;
     private TextView loginTxt;
     private FirebaseAuth auth;
@@ -68,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
         passField = findViewById(R.id.editTextTextPasswordRegister);
         birthField = findViewById(R.id.editTextBirthdate);
         cepField = findViewById(R.id.editTextTextCEP);
+        getLastLocation();
         registerBtn = findViewById(R.id.registerBtn);
         loginTxt = findViewById(R.id.textViewSignIn);
     }
@@ -108,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                if(task.isSuccessful()){
                                                    Toast.makeText(RegisterActivity.this, "Cadastro Realizado com Sucesso!",
                                                            Toast.LENGTH_SHORT).show();
-                                                   startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                                   startActivity(new Intent(RegisterActivity.this, SetUpProfileActivity.class));
                                                }
                                                else{
                                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -165,9 +182,51 @@ public class RegisterActivity extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                birthField.setText(dayOfMonth+"/"+String.format("%02d", month+1)+"/"+year);
+                birthField.setText(String.format("%02d", dayOfMonth)+"/"+String.format("%02d", month+1)+"/"+year);
+                Log.d(TAG, String.format("%02d", dayOfMonth)+"/"+String.format("%02d", month+1)+"/"+year);
             }
         }, 2023, 0, 1);
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onShow(DialogInterface dialogI) {
+                Button pButton = dialog.getButton (DialogInterface.BUTTON_POSITIVE);
+                pButton.setText ("Set date");
+                pButton.setBackgroundColor(R.color.beige);
+            }
+        });
         dialog.show();
+    }
+
+
+    private void getLastLocation(){
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null){
+                        Geocoder geocoder = new Geocoder(RegisterActivity.this, Locale.getDefault());
+                        try {
+                            String currentPlaceCEP = "";
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            currentPlaceCEP = addresses.get(0).getPostalCode();
+                            cepField.setText(currentPlaceCEP);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }
+            });
+        } else{
+            askPermission();
+        }
+    }
+    private void askPermission(){
+        ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        getLastLocation();
     }
 }
